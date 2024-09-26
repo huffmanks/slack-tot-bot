@@ -26,5 +26,5 @@ jobs:
           SLACK_SIGNING_SECRET: ${{ secrets.SLACK_SIGNING_SECRET }}
           SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          NODE_ENV: ${{ secrets.NODE_ENV }}
+          NODE_ENV: ${{ vars.NODE_ENV }}
         run: node bot.js
