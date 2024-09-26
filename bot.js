@@ -66,6 +66,7 @@ async function sendDailyUpdate() {
 (async () => {
   await app.start();
   console.log(`\n⚡️ Slack bot is running!\nNODE_ENV: ${process.env.NODE_ENV}`);
+
   if (process.env.NODE_ENV === "production") {
     await sendDailyUpdate();
   }
