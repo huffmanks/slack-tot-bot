@@ -61,7 +61,6 @@ async function sendDailyUpdate() {
     return;
   } catch (error) {
     console.error("Error sending message:", error);
-    return;
   }
 }
 
@@ -72,6 +71,8 @@ async function sendDailyUpdate() {
 
     if (process.env.NODE_ENV === "production") {
       await sendDailyUpdate();
+
+      await app.stop();
 
       process.exit(0);
     }
