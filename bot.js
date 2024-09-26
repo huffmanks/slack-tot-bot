@@ -4,7 +4,7 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   appToken: process.env.SLACK_APP_TOKEN,
   token: process.env.SLACK_BOT_TOKEN,
-  socketMode: true,
+  socketMode: false,
 });
 
 const API_URL = (date) => `https://dish.avifoodsystems.com/api/menu-items?date=${date.toLocaleDateString()}&locationId=93&mealId=144`;
@@ -19,8 +19,7 @@ async function fetchItems(url) {
 
     return data;
   } catch (error) {
-    console.error("Error fetching items:", error);
-
+    console.log("fetchItems()", error);
     return [];
   }
 }
@@ -34,33 +33,19 @@ async function checkForTots() {
   return hasTots;
 }
 
-// Slash command requires always on
-// app.command("/tots", async ({ command, ack, respond }) => {
-//   await ack();
-
-//   const hasTots = await checkForTots();
-
-//   if (hasTots) {
-//     await respond(`Yes <@${command.user_id}>, there is tots today at Burwell! 🎉`);
-//   } else {
-//     await respond(`No <@${command.user_id}>, there will not be tots today at Burwell. 🥲`);
-//   }
-// });
-
 async function sendDailyUpdate() {
-  const hasTots = await checkForTots();
-
   try {
+    const hasTots = await checkForTots();
+
     if (hasTots) {
       await app.client.chat.postMessage({
         channel: TEAM_OMC_CHANNEL_ID,
         text: `<!subteam^${TEAM_OMC_GROUP_ID}> there is tots today at Burwell! 🎉`,
       });
     }
-
-    return;
   } catch (error) {
-    console.error("Error sending message:", error);
+    console.log("sendDailyUpdate()", error);
+    return;
   }
 }
 
@@ -69,11 +54,9 @@ async function sendDailyUpdate() {
     await app.start();
     console.log(`\n⚡️ Slack bot is running!\nNODE_ENV: ${process.env.NODE_ENV}`);
 
-    if (process.env.NODE_ENV === "production") {
-      await sendDailyUpdate();
-    }
+    await sendDailyUpdate();
   } catch (error) {
-    console.error("Error starting the app:", error);
+    console.log("init_", error);
   } finally {
     await app.stop();
   }
