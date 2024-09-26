@@ -11,7 +11,7 @@ const API_URL = (date) => `https://dish.avifoodsystems.com/api/menu-items?date=$
 
 const TEAM_OMC_GROUP_ID = "SBNJ40AAX";
 const TEAM_OMC_CHANNEL_ID = "C01JKP6LBD3";
-const APP_CHANNEL_ID = "UFF0H819S";
+const APP_DM_CHANNEL_ID = "UFF0H819S";
 
 async function fetchItems(url) {
   try {
@@ -45,7 +45,7 @@ async function sendDailyUpdate() {
       });
     } else {
       await app.client.chat.postMessage({
-        channel: APP_CHANNEL_ID,
+        channel: APP_DM_CHANNEL_ID,
         text: `No tots today in Burwell. 🥲`,
       });
     }
