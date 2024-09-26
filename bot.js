@@ -71,13 +71,10 @@ async function sendDailyUpdate() {
 
     if (process.env.NODE_ENV === "production") {
       await sendDailyUpdate();
-
-      await app.stop();
-
-      process.exit(0);
     }
   } catch (error) {
     console.error("Error starting the app:", error);
-    process.exit(1);
+  } finally {
+    await app.stop();
   }
 })();
