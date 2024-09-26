@@ -20,8 +20,6 @@ async function fetchItems(url) {
     return data;
   } catch (error) {
     console.error("Error fetching items:", error);
-
-    process.exit(1);
   }
 }
 
