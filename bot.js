@@ -20,6 +20,8 @@ async function fetchItems(url) {
     return data;
   } catch (error) {
     console.error("Error fetching items:", error);
+
+    return [];
   }
 }
 
@@ -56,10 +58,10 @@ async function sendDailyUpdate() {
       });
     }
 
-    process.exit(0);
+    return;
   } catch (error) {
     console.error("Error sending message:", error);
-    process.exit(1);
+    return;
   }
 }
 
@@ -70,6 +72,8 @@ async function sendDailyUpdate() {
 
     if (process.env.NODE_ENV === "production") {
       await sendDailyUpdate();
+
+      process.exit(0);
     }
   } catch (error) {
     console.error("Error starting the app:", error);
