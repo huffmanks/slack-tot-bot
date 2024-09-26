@@ -3,6 +3,7 @@ name: Slack Tot Bot
 on:
   schedule:
     - cron: "0 9 * * 1-5" # Runs at 9 AM Monday to Friday
+  workflow_dispatch:
 
 jobs:
   tots-check:
@@ -25,4 +26,4 @@ jobs:
           SLACK_SIGNING_SECRET: ${{ secrets.SLACK_SIGNING_SECRET }}
           SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        run: node index.js
+        run: node bot.js
