@@ -17,11 +17,11 @@ async function fetchItems(url) {
     const response = await fetch(url);
     const data = await response.json();
 
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching items:", error);
-    return [];
+
+    process.exit(1);
   }
 }
 
@@ -34,17 +34,18 @@ async function checkForTots() {
   return hasTots;
 }
 
-app.command("/tots", async ({ command, ack, respond }) => {
-  await ack();
+// Slash command requires always on
+// app.command("/tots", async ({ command, ack, respond }) => {
+//   await ack();
 
-  const hasTots = await checkForTots();
+//   const hasTots = await checkForTots();
 
-  if (hasTots) {
-    await respond(`Yes <@${command.user_id}>, there is tots today at Burwell! 🎉`);
-  } else {
-    await respond(`No <@${command.user_id}>, there will not be tots today at Burwell. 🥲`);
-  }
-});
+//   if (hasTots) {
+//     await respond(`Yes <@${command.user_id}>, there is tots today at Burwell! 🎉`);
+//   } else {
+//     await respond(`No <@${command.user_id}>, there will not be tots today at Burwell. 🥲`);
+//   }
+// });
 
 async function sendDailyUpdate() {
   const hasTots = await checkForTots();
@@ -57,9 +58,10 @@ async function sendDailyUpdate() {
       });
     }
 
-    return;
+    process.exit(0);
   } catch (error) {
     console.error("Error sending message:", error);
+    process.exit(1);
   }
 }
 
