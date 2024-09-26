@@ -15,7 +15,7 @@ const TEAM_OMC_CHANNEL_ID = "C01JKP6LBD3";
 async function fetchItems(url) {
   try {
     const response = await fetch(url);
-    const data = response.json();
+    const data = await response.json();
 
     console.log(data);
     return data;
@@ -64,10 +64,15 @@ async function sendDailyUpdate() {
 }
 
 (async () => {
-  await app.start();
-  console.log(`\n⚡️ Slack bot is running!\nNODE_ENV: ${process.env.NODE_ENV}`);
+  try {
+    await app.start();
+    console.log(`\n⚡️ Slack bot is running!\nNODE_ENV: ${process.env.NODE_ENV}`);
 
-  if (process.env.NODE_ENV === "production") {
-    await sendDailyUpdate();
+    if (process.env.NODE_ENV === "production") {
+      await sendDailyUpdate();
+    }
+  } catch (error) {
+    console.error("Error starting the app:", error);
+    process.exit(1);
   }
 })();
