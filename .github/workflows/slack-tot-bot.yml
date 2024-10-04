@@ -2,7 +2,7 @@ name: Slack Tot Bot
 
 on:
   schedule:
-    - cron: "0 9 * * 1-5" # Runs at 9 AM Monday to Friday
+    - cron: "30 13 * * 1-5" # Runs at 9 AM Monday to Friday
   workflow_dispatch:
 
 jobs:
