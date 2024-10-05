@@ -34,6 +34,45 @@ async function checkForTots() {
   return hasTots;
 }
 
+function checkTodayIsHoliday() {
+  const today = new Date();
+  const holidays = {
+    "04-18": "Good Friday",
+    "05-26": "Memorial Day",
+    "06-19": "Juneteenth",
+    "07-04": "4th of July",
+    "09-01": "Labor Day",
+    "Thanksgiving-Break": { start: "11-27", end: "11-29" },
+    "Winter-Break1": { start: "12-20", end: "12-31" },
+    "Winter-Break2": { start: "01-01", end: "01-02" },
+  };
+
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  const formattedToday = `${month}-${day}`;
+
+  function isInRange(start, end, date) {
+    return date >= start && date <= end;
+  }
+
+  for (const key in holidays) {
+    const holiday = holidays[key];
+
+    if (typeof holiday === "string" && key === formattedToday) {
+      return true;
+    }
+
+    if (typeof holiday === "object") {
+      const { start, end } = holiday;
+      if (isInRange(start, end, formattedToday)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
 async function sendDailyUpdate() {
   try {
     const hasTots = await checkForTots();
@@ -60,7 +99,11 @@ async function sendDailyUpdate() {
     await app.start();
     console.log(`\n⚡️ Slack bot is running!\nNODE_ENV: ${process.env.NODE_ENV}`);
 
-    await sendDailyUpdate();
+    const isHoliday = checkTodayIsHoliday();
+
+    if (!isHoliday) {
+      await sendDailyUpdate();
+    }
   } catch (error) {
     console.log("init_", error);
   } finally {
