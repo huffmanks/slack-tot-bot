@@ -81,6 +81,43 @@ async function sendDailyUpdate() {
       await app.client.chat.postMessage({
         channel: TEAM_OMC_CHANNEL_ID,
         text: `<!subteam^${TEAM_OMC_GROUP_ID}> there is tots today at Burwell! 🎉`,
+        blocks: [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `<!subteam^${TEAM_OMC_GROUP_ID}> there is tots today at Burwell! 🎉`,
+            },
+          },
+          {
+            type: "actions",
+            elements: [
+              {
+                type: "button",
+                text: {
+                  type: "plain_text",
+                  text: "View menu",
+                  emoji: true,
+                },
+                value: "view_menu",
+                style: "primary",
+                url: "https://dish.avifoodsystems.com/wofford/93/144/day",
+                action_id: "actionId-0",
+              },
+              {
+                type: "button",
+                text: {
+                  type: "plain_text",
+                  text: "Add Terrier Bucks",
+                  emoji: true,
+                },
+                value: "add_terrier_bucks",
+                url: "https://get.cbord.com/wofford/full/login.php",
+                action_id: "actionId-1",
+              },
+            ],
+          },
+        ],
       });
     } else {
       await app.client.chat.postMessage({
