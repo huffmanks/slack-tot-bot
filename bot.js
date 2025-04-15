@@ -42,9 +42,9 @@ function checkTodayIsHoliday() {
     "06-19": "Juneteenth",
     "07-04": "4th of July",
     "09-01": "Labor Day",
-    "Thanksgiving-Break": { start: "11-27", end: "11-29" },
-    "Winter-Break1": { start: "12-20", end: "12-31" },
-    "Winter-Break2": { start: "01-01", end: "01-02" },
+    "Thanksgiving-Break": { start: "11-24", end: "11-30" },
+    "Winter-Break1": { start: "12-19", end: "12-31" },
+    "Winter-Break2": { start: "01-01", end: "01-04" },
   };
 
   const month = String(today.getMonth() + 1).padStart(2, "0");
@@ -80,13 +80,13 @@ async function sendDailyUpdate() {
     if (hasTots) {
       await app.client.chat.postMessage({
         channel: TEAM_OMC_CHANNEL_ID,
-        text: `<!subteam^${TEAM_OMC_GROUP_ID}> there is tots today at Burwell! 🎉`,
+        text: `<!subteam^${TEAM_OMC_GROUP_ID}> there are tots today at Burwell! 🎉`,
         blocks: [
           {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: `<!subteam^${TEAM_OMC_GROUP_ID}> there is tots today at Burwell! 🎉`,
+              text: `<!subteam^${TEAM_OMC_GROUP_ID}> there are tots today at Burwell! 🎉`,
             },
           },
           {
